@@ -1,28 +1,21 @@
 ## Project Title
 
-GBDA302 Week 2 Example 3: Platforms (AABB Collisions)
-
----
-
-## Authors
-
-Karen Cochrane and David Han
+Side Quest Week 2: Interactive Blob
 
 ---
 
 ## Description
 
-Adds several rectangular platforms. The blob is drawn as a noisy circle but collides using a simple axis-aligned bounding box (AABB). X and Y are resolved separately to keep behaviour predictable and teachable.
+> Based on the foundation of Example 03, this version allows the blob to change its color from blue to green while moving, and transform to a rougher spiky red appearance when hitting the platforms whether on the sides or underside.
+> It applies how semantic colors communicate emotions and signify states and functions to users.
 
 ---
 
-## Learning Goals
+## Interaction Instructions
 
-Learning Goals:
-
-- Convert a circular sprite to an AABB for collision
-- Implement overlap test and push-out resolution
-- Manage grounded state only when landing on top faces
+> Press and hold `A/D` or `←/→` to move the blob horizontally.
+> Press `W`, `SPACE`, or `↑` to jump.
+> Land on platforms.
 
 ---
 
@@ -32,8 +25,8 @@ N/A
 
 ---
 
-## GenAI
+## References
 
-The code was written by Dr. Karen Cochrane but she used GenAI to write the comments.
+N/A
 
 ---
