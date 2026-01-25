@@ -13,6 +13,17 @@ let blob3 = {
   wobble: 7, // Edge deformation amount
   wobbleFreq: 0.9,
 
+  // Hit effect timing
+  hitTime: -9999, // last hit timestamp (ms)
+
+  // Normal look (store defaults to return cleanly)
+  baseWobble: 7,
+  baseWobbleFreq: 0.9,
+
+  // Spike look (hit state)
+  spikeWobble: 18, // bigger deformation = spikes
+  spikeWobbleFreq: 2.2, // higher frequency = more jagged
+
   // Time values for breathing animation
   t: 0,
   tSpeed: 0.01,
@@ -162,6 +173,10 @@ function drawBlobCircle(b) {
   const hitDuration = 300; // milliseconds
   const isHit = millis() - b.hitTime < hitDuration;
 
+  // Choose wobble settings depending on state
+  const wobbleNow = isHit ? b.spikeWobble : b.baseWobble;
+  const freqNow = isHit ? b.spikeWobbleFreq : b.baseWobbleFreq;
+
   if (isHit) {
     fill(255, 80, 80); // red (hit)
   } else if (abs(b.vx) > 0.2) {
@@ -175,13 +190,9 @@ function drawBlobCircle(b) {
     const a = (i / b.points) * TAU;
 
     // Noise-based radius offset
-    const n = noise(
-      cos(a) * b.wobbleFreq + 100,
-      sin(a) * b.wobbleFreq + 100,
-      b.t,
-    );
+    const n = noise(cos(a) * freqNow + 100, sin(a) * freqNow + 100, b.t);
 
-    const r = b.r + map(n, 0, 1, -b.wobble, b.wobble);
+    const r = b.r + map(n, 0, 1, -wobbleNow, wobbleNow);
 
     vertex(b.x + cos(a) * r, b.y + sin(a) * r);
   }
