@@ -29,6 +29,7 @@ let blob3 = {
 
   // State
   onGround: false, // True when standing on a platform
+  hitPlatform: false, // True when contacting a platform (sides or underside)
 
   // Friction
   frictionAir: 0.995, // Light friction in air
@@ -106,12 +107,14 @@ function draw() {
         box.x = s.x + s.w;
       }
       blob3.vx = 0;
+      blob3.hitPlatform = true; // Change the state when hitting the sides of the platforms
     }
   }
 
   // --- STEP 2: Move vertically, then resolve Y collisions ---
   box.y += blob3.vy;
   blob3.onGround = false;
+  blob3.hitPlatform = false;
 
   for (const s of platforms) {
     if (overlap(box, s)) {
@@ -124,6 +127,7 @@ function draw() {
         // Rising → hit the underside of a platform
         box.y = s.y + s.h;
         blob3.vy = 0;
+        blob3.hitPlatform = true; // Change the state when hitting the underside of the platforms
       }
     }
   }
@@ -154,7 +158,9 @@ function overlap(a, b) {
 
 // Draws the blob using Perlin noise for a soft, breathing effect
 function drawBlobCircle(b) {
-  if (abs(b.vx) > 0.2) {
+  if (b.hitPlatform) {
+    fill(255, 80, 80);
+  } else if (abs(b.vx) > 0.2) {
     fill(80, 220, 120); // green (move)
   } else {
     fill(20, 120, 255); // blue (idle)
